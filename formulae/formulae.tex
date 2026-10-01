@@ -1,0 +1,366 @@
+
+
+% ==========================================================
+\section{Algebra, logarithms and counting}
+% ==========================================================
+
+\subsection{Power--log swap identity}
+For any positive reals $a,b$:
+\begin{align}
+a^{\log_{10}b}=b^{\log_{10}a}. \label{eq:powlog}
+\end{align}
+\textbf{Derivation.} Take $\log_{10}$ of the left side and use $\log(u^v)=v\log u$:
+\begin{align}
+\log_{10}\!\left(a^{\log_{10}b}\right)=\log_{10}b\cdot\log_{10}a=\log_{10}\!\left(b^{\log_{10}a}\right).
+\end{align}
+Since $\log_{10}$ is strictly increasing (one-to-one), the arguments are equal. \hfill$\square$
+\used{Q.4}
+
+\subsection{Digit constraints}
+A decimal digit lies in $\{0,\dots,9\}$, so each digit of a number with digit-product $70=2\cdot5\cdot7$ is a divisor of $70$
+that is at most $9$: one of $1,2,5,7$. A digit $1$ would force the other two digits to multiply to $70$, but the
+largest product of two allowed digits is $7\cdot7=49<70$. So no digit is $1$; every digit is in $\{2,5,7\}$ and the
+product $70$ (which contains each prime exactly once) forces the digits to be $2,5,7$ in some order
+(by unique prime factorisation).
+\used{Q.2}
+
+\subsection{Sum of squares of consecutive integers}
+\begin{align}
+k^2+(k+1)^2=2k^2+2k+1. \label{eq:consecsq}
+\end{align}
+This is increasing for $k\ge0$; it is $\le999$ iff $2k^2+2k\le998$, i.e.\ $k^2+k\le499$, i.e.\ $k\le21$
+($21\cdot22=462\le499<22\cdot23=506$).
+\used{Q.9}
+
+\subsection{Mean, median, mode}
+For an ordered sample $x_{(1)}\le\dots\le x_{(n)}$ with $n$ odd:
+\begin{align}
+\text{mean}=\frac1n\sum x_i,\qquad \text{median}=x_{((n+1)/2)}, \label{eq:meanmedian}
+\end{align}
+and the mode is the value(s) of maximum frequency; a ``single mode'' means the maximum frequency
+is attained by exactly one value.
+\used{Q.7}
+
+\subsection{Binomial theorem and number of subsets}
+\begin{align}
+(1+x)^N=\sum_{k=0}^{N}\binom Nk x^k. \label{eq:binomial}
+\end{align}
+Putting $x=1$: $\sum_k\binom Nk=2^N$, the number of subsets of an $N$-set (including $\varnothing$);
+the number of non-empty subsets is $2^N-1$.
+
+\textbf{Even-product counting.} A product is odd iff all factors are odd, so for
+$S=\{1,\dots,2026\}$ (with $1013$ odd elements):
+\begin{align}
+\#\{\text{non-empty subsets, even product}\}=(2^{2026}-1)-(2^{1013}-1)=2^{1013}(2^{1013}-1). \label{eq:evenprod}
+\end{align}
+\used{Q.19}
+
+\subsection{Stars and bars via generating functions}
+The number of solutions of $n_1+\dots+n_r=m$ in non-negative integers is the coefficient
+$[x^m]\big(\sum_{n\ge0}x^n\big)^r=[x^m](1-x)^{-r}$. From the binomial series
+\begin{align}
+(1-x)^{-r}=\sum_{m\ge0}\binom{m+r-1}{r-1}x^m, \label{eq:negbinom}
+\end{align}
+which follows by differentiating $\frac1{1-x}=\sum x^n$ repeatedly ($\tfrac1{(r-1)!}\tfrac{d^{r-1}}{dx^{r-1}}$)
+or by counting arrangements of $m$ stars and $r-1$ bars. Hence
+\begin{align}
+\#\{n_i\ge0\}=\binom{m+r-1}{r-1},\qquad
+\#\{n_i\ge1\}=[x^m]x^r(1-x)^{-r}=\binom{m-1}{r-1}. \label{eq:starsbars}
+\end{align}
+For $r=4,m=20$: $\binom{23}{3}$ and $\binom{19}{3}$.
+\used{Q.20}
+
+\subsection{Multiple binomial selections (independent entries)}
+If $n$ independent Bernoulli$(p)$ trials are made, the number of successes $K$ satisfies
+\begin{align}
+P(K=k)=\binom nk p^k(1-p)^{n-k}. \label{eq:binompmf}
+\end{align}
+For $p=\tfrac12$, $P(K=k)=\binom nk/2^n$. For entries in disjoint positions the events are independent, so
+probabilities multiply; for a shared entry we condition on its value and use the total probability theorem
+\eqref{eq:totalprob} below.
+\used{Q.64}
+
+% ==========================================================
+\section{Geometry and calculus}
+% ==========================================================
+
+\subsection{Inscribed angle theorem}
+An angle subtended at the circle by a chord is half the central angle subtended by the same arc:
+\begin{align}
+\angle PQR=\tfrac12\angle POR. \label{eq:inscribed}
+\end{align}
+\textbf{Derivation (case $O$ on a side of the angle).} Let $QO$ meet the circle again at $T$. Triangle $OPQ$ is
+isosceles ($OP=OQ=r$), so $\angle OQP=\angle OPQ=\alpha$ and the exterior angle at $O$ is
+$\angle POT=2\alpha$. Likewise $\angle ROT=2\beta$ with $\beta=\angle OQR$. Then
+$\angle POR=2(\alpha+\beta)=2\angle PQR$. The other configurations follow by adding or subtracting. \hfill$\square$
+
+\subsection{Chord length, triangle and kite area}
+For a chord subtending central angle $\phi$ in a circle of radius $r$:
+\begin{align}
+\text{chord}=2r\sin\frac\phi2,\qquad \phi=90^\circ\Rightarrow PR=r\sqrt2. \label{eq:chord}
+\end{align}
+Distance from the centre to the chord: $r\cos\frac\phi2=\frac{r}{\sqrt2}$.
+Area of a triangle $=\tfrac12(\text{base})(\text{height})$.
+
+\textbf{Arrowhead area.} If $O$ lies inside triangle $PQR$ and $QO\perp PR$, with $h_Q,h_O$ the
+distances of $Q,O$ from $PR$ and $h_Q-h_O=QO$:
+\begin{align}
+[PQRO]=[PQR]-[POR]=\tfrac12PR\,(h_Q-h_O)=\tfrac12\,PR\cdot QO. \label{eq:kite}
+\end{align}
+For $r=10$: $\tfrac12(10\sqrt2)(10)=50\sqrt2$.
+\used{Q.10}
+
+\subsection{Subspaces, planes and discs}
+A $2$-dimensional subspace of $\mathbb R^3$ is $\{x:\ a^Tx=0\}$ for a non-zero normal $a$, which always
+contains the origin. The ball $\{x^Tx\le R^2\}$ centred at the origin intersects such a plane in
+$\{y\in\text{plane}: \|y\|\le R\}$, a disc of radius $R$ and area $\pi R^2$ (here $R=4$).
+\used{Q.22}
+
+\subsection{Factor theorem and roots of a cubic}
+If $f(a)=0$ then $(x-a)$ divides $f$. For $f(x)=x^3-3x^2+2$: $f(1)=0$ and polynomial division gives
+\begin{align}
+f(x)=(x-1)(x^2-2x-2),\qquad x^2-2x-2=0\Rightarrow x=\frac{2\pm\sqrt{4+8}}{2}=1\pm\sqrt3. \label{eq:cubicroots}
+\end{align}
+
+\subsection{Extrema of a differentiable function}
+At an interior extremum $f'(x_0)=0$ (Fermat); the second derivative test says $f''(x_0)>0$ gives a local
+minimum and $f''(x_0)<0$ a local maximum. For $f=x^3-3x^2+2$:
+\begin{align}
+f'=3x^2-6x=3x(x-2),\qquad f''=6x-6,\qquad f''(0)=-6<0,\ f''(2)=6>0. \label{eq:extrema}
+\end{align}
+On a half-open interval $(-1,3]$ a global extremum can also occur at the included endpoint but never at an
+excluded one: $f(-1^{+})\to-2$ is approached but not attained, so $\min f=f(2)=-2$ attained only at $2$,
+while $f(0)=f(3)=2$ gives two maximisers.
+\used{Q.27}
+
+\subsection{Geometric series}
+\begin{align}
+\sum_{n=0}^{\infty}a^n=\frac1{1-a},\quad |a|<1;\qquad
+\sum_{n=1}^{\infty}a^n=\frac a{1-a}. \label{eq:geom}
+\end{align}
+\textbf{Derivation.} $S_N=\sum_{n=0}^{N}a^n$ satisfies $S_N-aS_N=1-a^{N+1}$, so $S_N=\frac{1-a^{N+1}}{1-a}\to\frac1{1-a}$.
+\used{Q.35}
+
+\subsection{$Z$-transform of a geometric sequence}
+\begin{align}
+\Z\{a^nu[n]\}(z)=\sum_{n=0}^{\infty}a^nz^{-n}=\frac1{1-az^{-1}},\quad |z|>|a|. \label{eq:ztgeom}
+\end{align}
+Evaluating at $z=1$ (inside the region of convergence when $|a|<1$) gives the sum of the series; for the shifted
+sequence $a^nu[n-1]$ one gets $\frac{az^{-1}}{1-az^{-1}}\big|_{z=1}=\frac{a}{1-a}$. This reproduces \eqref{eq:geom}.
+For matrices, $\Z\{M^k\}=z(zI-M)^{-1}$ (same derivation with $a\to M$), whose poles are the eigenvalues of $M$.
+\used{Q.35, Q.21}
+
+% ==========================================================
+\section{Linear algebra}
+% ==========================================================
+
+\subsection{Eigenvalues, trace and characteristic polynomial}
+Eigenvalues are roots of $\det(A-\lambda I)=0$. The coefficient of $\lambda^{n-1}$ shows
+\begin{align}
+\sum_i\lambda_i=\mathrm{tr}(A),\qquad \prod_i\lambda_i=\det A. \label{eq:trace}
+\end{align}
+For a block-diagonal matrix the characteristic polynomial is the product of the blocks' polynomials.
+\used{Q.46}
+
+\subsection{Rotation matrix: eigenvalues and powers}
+For $R(\theta)=\begin{pmatrix}\cos\theta&-\sin\theta\\ \sin\theta&\cos\theta\end{pmatrix}$:
+\begin{align}
+\det(R-\lambda I)=(\cos\theta-\lambda)^2+\sin^2\theta=\lambda^2-2\lambda\cos\theta+1=0
+\ \Rightarrow\ \lambda=\cos\theta\pm i\sin\theta=e^{\pm i\theta}. \label{eq:roteig}
+\end{align}
+\textbf{Powers.} By the angle-addition formulas, $R(\alpha)R(\beta)=R(\alpha+\beta)$:
+the $(1,1)$ entry is $\cos\alpha\cos\beta-\sin\alpha\sin\beta=\cos(\alpha+\beta)$, the $(2,1)$ entry is
+$\sin\alpha\cos\beta+\cos\alpha\sin\beta=\sin(\alpha+\beta)$, etc. By induction
+\begin{align}
+R(\theta)^n=R(n\theta). \label{eq:rotpow}
+\end{align}
+Equivalently, with $R=P\,\mathrm{diag}(e^{i\theta},e^{-i\theta})P^{-1}$, $R^n=P\,\mathrm{diag}(e^{in\theta},e^{-in\theta})P^{-1}$.
+Since $R(\theta+2\pi k)=R(\theta)$, only $n\theta \bmod 2\pi$ matters: for $\theta=\frac{2\pi}{5}$,
+$R^{n}=R^{n \bmod 5}$ and $2026=5\cdot405+1$.
+\used{Q.21, Q.46}
+
+\subsection{Centring matrix $M=I_n-\frac1n\mathbf 1\mathbf 1^T$}
+Using $\mathbf 1^T\mathbf 1=n$:
+\begin{align}
+M^T&=M,\\
+M^2&=I-\tfrac2n\mathbf 1\mathbf 1^T+\tfrac1{n^2}\mathbf 1(\mathbf 1^T\mathbf 1)\mathbf 1^T=I-\tfrac1n\mathbf 1\mathbf 1^T=M,\\
+\mathrm{tr}(M)&=n-\tfrac1n\mathrm{tr}(\mathbf 1\mathbf 1^T)=n-\tfrac1n\cdot n=n-1,\\
+M\mathbf 1&=\mathbf 1-\tfrac1n\mathbf 1\,n=\mathbf 0,\qquad Mv=v\ \text{ if }\mathbf 1^Tv=0. \label{eq:centring}
+\end{align}
+So $M$ is a symmetric idempotent matrix, i.e.\ an orthogonal projection, with eigenvalue $0$ (eigenvector
+$\mathbf 1$) once and eigenvalue $1$ with multiplicity $n-1$ (the subspace $\mathbf 1^\perp$);
+its rank equals its trace $=n-1$.
+\used{Q.52, Q.53, Q.65}
+
+\subsection{Spectral theorem and Rayleigh quotient}
+A real symmetric $A$ has orthonormal eigenvectors $u_i$ with real eigenvalues $\lambda_i$. For
+$\|x\|=1$ write $x=\sum c_iu_i$, $\sum c_i^2=1$:
+\begin{align}
+x^TAx=\sum_i\lambda_ic_i^2\le\lambda_{\max}\sum_ic_i^2=\lambda_{\max}, \label{eq:rayleigh}
+\end{align}
+with equality for $x=u_{\max}$. For $M$ in \eqref{eq:centring}, $\lambda_{\max}=1$.
+\used{Q.65}
+
+% ==========================================================
+\section{Probability and statistics}
+% ==========================================================
+
+\subsection{Total probability and Bayes' theorem}
+For a partition $\{D,\bar D\}$:
+\begin{align}
+P(+)=P(+|D)P(D)+P(+|\bar D)P(\bar D), \label{eq:totalprob}\\
+P(D|+)=\frac{P(+\cap D)}{P(+)}=\frac{P(+|D)P(D)}{P(+)}. \label{eq:bayes}
+\end{align}
+The second line follows from $P(A\cap B)=P(A|B)P(B)=P(B|A)P(A)$.
+\used{Q.57, Q.64}
+
+\subsection{Variance identities}
+\begin{align}
+\Var(W)=\E[W^2]-(\E W)^2,\qquad
+\E[UV]=\E U\,\E V\ \text{ for independent }U,V. \label{eq:var}
+\end{align}
+For independent $X,Y$ with $\E Y=0$: $\E[(g(X)Y)]=\E g(X)\,\E Y=0$, so
+\begin{align}
+\Var\big(g(X)Y\big)=\E[g(X)^2]\,\E[Y^2]. \label{eq:varprod}
+\end{align}
+For $X\in\{0,1\}$, $g(X)=2X-1\in\{\pm1\}$, thus $g(X)^2\equiv1$; also $\E[Y^2]=\Var Y+(\E Y)^2$.
+\used{Q.44}
+
+\subsection{Pairwise-difference identity}
+With $\bar x=\frac1n\sum x_i$ and $d_i=x_i-\bar x$ (so $\sum d_i=0$):
+\begin{align}
+\sum_{i=1}^n\sum_{j=1}^n(x_i-x_j)^2&=\sum_{i,j}(d_i-d_j)^2
+=\sum_{i,j}\big(d_i^2+d_j^2-2d_id_j\big)\notag\\
+&=2n\sum_id_i^2-2\Big(\sum_id_i\Big)^2=2n\sum_i(x_i-\bar x)^2. \label{eq:pairdiff}
+\end{align}
+\used{Q.62}
+
+\subsection{Total expectation, covariance, correlation}
+\begin{align}
+\E[Y]=\E\big[\E[Y|X]\big],\qquad \E[XY]=\E\big[X\,\E[Y|X]\big], \label{eq:totalexp}\\
+\Cov(X,Y)=\E[XY]-\E X\,\E Y,\qquad \rho=\frac{\Cov(X,Y)}{\sigma_X\sigma_Y}. \label{eq:corr}
+\end{align}
+For $U\sim\text{Uniform}(a,b)$: $\E U=\frac{a+b}2$. For $X\sim\text{Uniform}(-1,1)$:
+$\E[X^3]=\int_{-1}^1\tfrac12x^3dx=0$ (odd integrand, symmetric limits).
+\used{Q.63}
+
+\subsection{Exponential distribution and memorylessness}
+For mean $\lambda$: pdf $f(x)=\frac1\lambda e^{-x/\lambda}$, $x\ge0$, survival
+$S(t)=\int_t^\infty f=e^{-t/\lambda}$. Then
+\begin{align}
+P(X>s+t\mid X>s)=\frac{S(s+t)}{S(s)}=e^{-t/\lambda}=S(t). \label{eq:memoryless}
+\end{align}
+\used{Q.34}
+
+\subsection{Gaussian integral and moment generating functions}
+Moment generating function $M_X(s)=\E[e^{sX}]$ (a two-sided Laplace transform of the pdf at $-s$); for independent
+$X_i$, $M_{\sum X_i}=\prod M_{X_i}$ and the MGF determines the law.
+
+\textbf{$\chi^2_1$.} For $X\sim N(0,1)$, $s<\tfrac12$:
+\begin{align}
+\E\big[e^{sX^2}\big]=\int_{-\infty}^\infty\frac{e^{-(1-2s)x^2/2}}{\sqrt{2\pi}}dx=(1-2s)^{-1/2}, \label{eq:mgfchi}
+\end{align}
+using $\int e^{-ax^2/2}dx=\sqrt{2\pi/a}$ with $a=1-2s$. Hence $\sum_{i=1}^nX_i^2$ has MGF
+$(1-2s)^{-n/2}$, which defines $\chi^2_n$.
+
+\textbf{Exponential.} For $\text{Exp}(\text{mean }\theta)$:
+\begin{align}
+\E[e^{sX}]=\int_0^\infty\frac1\theta e^{-x(1/\theta-s)}dx=\frac1{1-\theta s}. \label{eq:mgfexp}
+\end{align}
+With $\theta=2$ this is $(1-2s)^{-1}$, so $\chi^2_2=\text{Exp}(\text{mean }2)$.
+
+\textbf{Sample mean.} If $X_i$ are i.i.d.\ $N(0,1)$ then $\bar X\sim N(0,\tfrac1n)$ (sum of independent Gaussians),
+so $\sqrt n\bar X\sim N(0,1)$ and $(\sqrt n\bar X)^2\sim\chi^2_1$.
+\used{Q.53}
+
+\subsection{Cochran-type result for projections}
+Let $X\sim N(0,I_n)$ and $M$ a symmetric idempotent matrix of rank $r$. Write $M=U\Lambda U^T$ with $U$
+orthogonal and $\Lambda$ having $r$ ones and $n-r$ zeros. Then $Y=U^TX\sim N(0,U^TU)=N(0,I_n)$ and
+\begin{align}
+X^TMX=Y^T\Lambda Y=\sum_{k=1}^rY_k^2\sim\chi^2_r. \label{eq:cochran}
+\end{align}
+Applying this to the centring matrix ($r=n-1$) and noting $\sum(X_i-\bar X)^2=X^TMX$ gives $\chi^2_{n-1}$.
+\used{Q.53}
+
+\subsection{Properties of a discrete CDF}
+For a pmf $p(x_k)\ge0$, $\sum p(x_k)=1$, define $F(x)=\sum_{x_k\le x}p(x_k)$. Then
+(i) $0\le F\le1$ and $F(x)=0$ for $x<\min x_k$; (ii) $F$ is non-decreasing (adding non-negative terms);
+(iii) $F(x_k)-F(x_k^-)=p(x_k)$, a jump; (iv) because of ``$\le$'', $F(x_k)=F(x_k^+)$, so $F$ is right-continuous,
+but $F(x_k^-)\ne F(x_k)$ when $p(x_k)>0$, so it is not left-continuous.
+\used{Q.54}
+
+\subsection{Normal and Cauchy ($t_1$) laws}
+\textbf{Densities.} $g(z)=\frac1{\sqrt{2\pi}}e^{-z^2/2}$. The Student-$t_\nu$ density is
+$\frac{\Gamma(\frac{\nu+1}2)}{\sqrt{\nu\pi}\,\Gamma(\frac\nu2)}\big(1+\frac{y^2}\nu\big)^{-\frac{\nu+1}2}$; for $\nu=1$,
+with $\Gamma(1)=1$, $\Gamma(\tfrac12)=\sqrt\pi$:
+\begin{align}
+h(y)=\frac1{\pi(1+y^2)},\qquad H(y)=\int_{-\infty}^y h=\frac12+\frac{\arctan y}\pi. \label{eq:cauchy}
+\end{align}
+\textbf{Symmetry.} For an even pdf, $F(-y)=1-F(y)$ and $F(0)=\tfrac12$. Hence $G(c)<H(c)\iff G(-c)>H(-c)$:
+exactly one of the statements $G(c)<H(c)$ and $G(-c)<H(-c)$ can hold.
+
+\textbf{Characteristic functions (Fourier transforms of the pdf).}
+For the normal law, completing the square,
+\begin{align}
+\varphi_Z(\omega)=\int e^{i\omega z}g(z)dz=e^{-\omega^2/2},
+\end{align}
+and for the Cauchy law, by residues (closing the contour in the upper half-plane for $\omega>0$, pole at $y=i$),
+\begin{align}
+\varphi_Y(\omega)=\int\frac{e^{i\omega y}}{\pi(1+y^2)}dy=e^{-|\omega|}.
+\end{align}
+The Cauchy law has $|\omega|$ in the exponent (non-differentiable at $0$), which corresponds to the
+$1/y^2$ tail and non-existent mean, whereas the normal law has a Gaussian tail.
+
+\textbf{Uniqueness of the crossing point $c>0$.} Setting $g(c)=h(c)$:
+\begin{align}
+\frac{e^{-c^2/2}}{\sqrt{2\pi}}=\frac1{\pi(1+c^2)}\iff
+q(c):=\sqrt{\tfrac\pi2}\,(1+c^2)e^{-c^2/2}=1. \label{eq:crossing}
+\end{align}
+Now $\frac d{dc}\big[(1+c^2)e^{-c^2/2}\big]=c(1-c^2)e^{-c^2/2}$, so $q$ increases on $(0,1)$ from
+$\sqrt{\pi/2}\approx1.25>1$ to $q(1)=2\sqrt{\pi/2}\,e^{-1/2}\approx1.52$, then decreases to $0$. Hence $q=1$ has
+exactly one root $c>0$, with $c>1$; numerically $q(1.85)\approx1.002$, $q(1.86)\approx0.992$, so $c\approx1.85$.
+Then $H(-c)=\tfrac12-\frac{\arctan1.85}\pi\approx0.158$ and $G(-c)\approx0.032$.
+\used{Q.28}
+
+\subsection{Poisson law, Central Limit Theorem}
+$N\sim\text{Poisson}(\mu)$: $P(N=k)=e^{-\mu}\mu^k/k!$, $\E N=\Var N=\mu$, and the characteristic function is
+\begin{align}
+\varphi_N(\omega)=\sum_ke^{i\omega k}\frac{e^{-\mu}\mu^k}{k!}=\exp\!\big(\mu(e^{i\omega}-1)\big). \label{eq:poischar}
+\end{align}
+Hence $\varphi_{N_n}=\varphi_{N_1}^{\,n}$ for $\mu=n$: $N_n$ is a sum of $n$ i.i.d.\ Poisson$(1)$ variables. The
+Central Limit Theorem (Fourier-transform proof: $\varphi_{(S_n-n\mu)/\sqrt{n}\sigma}(\omega)\to e^{-\omega^2/2}$) gives
+\begin{align}
+\frac{N_n-n}{\sqrt n}\xrightarrow{d}N(0,1)\ \Rightarrow\
+P(N_n\le n)=P\!\left(\tfrac{N_n-n}{\sqrt n}\le0\right)\to\Phi(0)=\tfrac12. \label{eq:clt}
+\end{align}
+\used{Q.45}
+
+% ==========================================================
+\section{Optimisation and computer-science facts}
+% ==========================================================
+
+\subsection{Stochastic gradient descent}
+For loss $f_w(x)$ and learning rate $\eta$:
+\begin{align}
+w_{t+1}=w_t-\eta\,\frac{\partial f_w(x)}{\partial w}\Big|_{w_t}, \label{eq:sgd}
+\end{align}
+and for $f_w(x)=wx$, $\frac{\partial f}{\partial w}=x$, so $w_{t+1}=w_t-\eta x$.
+\used{Q.29}
+
+\subsection{Bubble sort pass and inversions}
+An inversion is a pair $i<j$ with $a_i>a_j$. Swapping an adjacent out-of-order pair $(a_k,a_{k+1})$ removes exactly that
+inversion and changes the relative order of no other pair, so the inversion count drops by exactly $1$ per swap.
+A fully sorted array has $0$ inversions. Therefore the total number of swaps performed until the array is sorted equals the
+initial inversion count. For $[5,3,4,1,2]$: $4+2+2+0+0=8$ inversions (counted by the smaller-indexed element).
+\used{Q.58}
+
+\subsection{Python semantics used}
+\begin{itemize}[itemsep=0pt]
+ \item Default parameter values are evaluated once, at function definition time; a mutable default is shared by all
+ calls that omit the argument.
+ \item Each call of an enclosing function creates a new local scope; an inner function (closure) keeps a reference to
+ its own enclosing variables, so two closures from two calls share nothing.
+\end{itemize}
+\used{Q.16, Q.50}
+
+\end{document}
