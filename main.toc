@@ -1,0 +1,38 @@
+\contentsline {section}{\numberline {1}GATE-BM-2025}{4}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Formulae}{4}{subsection.1.1}%
+\contentsline {section}{\numberline {2}Algebra, logarithms and counting}{4}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Power--log swap identity}{4}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Digit constraints}{4}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Sum of squares of consecutive integers}{4}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Mean, median, mode}{4}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Binomial theorem and number of subsets}{4}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Stars and bars via generating functions}{5}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}Multiple binomial selections (independent entries)}{5}{subsection.2.7}%
+\contentsline {section}{\numberline {3}Geometry and calculus}{5}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Inscribed angle theorem}{5}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Chord length, triangle and kite area}{6}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Subspaces, planes and discs}{6}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Factor theorem and roots of a cubic}{6}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Extrema of a differentiable function}{6}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.6}Geometric series}{6}{subsection.3.6}%
+\contentsline {subsection}{\numberline {3.7}$Z$-transform of a geometric sequence}{7}{subsection.3.7}%
+\contentsline {section}{\numberline {4}Linear algebra}{7}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Eigenvalues, trace and characteristic polynomial}{7}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Rotation matrix: eigenvalues and powers}{7}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Centring matrix $M=I_n-\frac 1n\mathbf 1\mathbf 1^T$}{7}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Spectral theorem and Rayleigh quotient}{8}{subsection.4.4}%
+\contentsline {section}{\numberline {5}Probability and statistics}{8}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Total probability and Bayes' theorem}{8}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Variance identities}{8}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Pairwise-difference identity}{8}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Total expectation, covariance, correlation}{9}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}Exponential distribution and memorylessness}{9}{subsection.5.5}%
+\contentsline {subsection}{\numberline {5.6}Gaussian integral and moment generating functions}{9}{subsection.5.6}%
+\contentsline {subsection}{\numberline {5.7}Cochran-type result for projections}{9}{subsection.5.7}%
+\contentsline {subsection}{\numberline {5.8}Properties of a discrete CDF}{10}{subsection.5.8}%
+\contentsline {subsection}{\numberline {5.9}Normal and Cauchy ($t_1$) laws}{10}{subsection.5.9}%
+\contentsline {subsection}{\numberline {5.10}Poisson law, Central Limit Theorem}{10}{subsection.5.10}%
+\contentsline {section}{\numberline {6}Optimisation and computer-science facts}{11}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Stochastic gradient descent}{11}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Bubble sort pass and inversions}{11}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Python semantics used}{11}{subsection.6.3}%
