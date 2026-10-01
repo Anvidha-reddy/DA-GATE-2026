@@ -1,0 +1,810 @@
+
+
+\lstset{language=Python,basicstyle=\ttfamily\small,breaklines=true,
+        frame=single,columns=fullflexible}
+
+\title{GATE 2026 -- Data Science \& Artificial Intelligence (DA)\\
+Selected Solutions}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{enumerate}[label=\textbf{Q.\arabic*},leftmargin=*,start=1]
+
+% =====================================================
+% Q2
+% =====================================================
+\item[\textbf{Q.2}] The product of the digits of a three-digit number is $70$.
+The sum of the digits of this three-digit number is \underline{\hspace{1.5cm}}.
+\hfill (GATE DA 2026)
+\begin{multicols}{4}
+\begin{enumerate}[label=(\alph*),itemsep=0pt]
+ \item $12$ \item $14$ \item $16$ \item $18$
+\end{enumerate}
+\end{multicols}
+\solution
+Prime factorisation:
+\begin{align}
+70 = 2\cdot 5\cdot 7 .
+\end{align}
+Each digit is at most $9$, so no digit can be $10$, $14$, $35$ or $70$. The
+three digits must therefore use the prime factors $2,5,7$ one each. A digit
+$1$ would force another digit to be $\ge 10$, so it is not allowed.
+The digit multiset is $\{2,5,7\}$ and
+\begin{align}
+2+5+7 = 14 .
+\end{align}
+\ans{$\boxed{14}$ \quad Option (b)}
+
+% =====================================================
+% Q4
+% =====================================================
+\item[\textbf{Q.4}] Let $m>n>0$ be distinct reals, $x=n^{\log_{10}m}$ and
+$y=m^{\log_{10}n}$. The relation between $x$ and $y$ is \underline{\hspace{1.5cm}}.
+\hfill (GATE DA 2026)
+\begin{multicols}{4}
+\begin{enumerate}[label=(\alph*),itemsep=0pt]
+ \item $x>y$ \item $x<y$ \item $x=y$ \item $x=\log_{10}y$
+\end{enumerate}
+\end{multicols}
+\solution
+Take $\log_{10}$ of both quantities:
+\begin{align}
+\log_{10}x &= \log_{10}\!\left(n^{\log_{10}m}\right)=\log_{10}m\cdot\log_{10}n,\\
+\log_{10}y &= \log_{10}\!\left(m^{\log_{10}n}\right)=\log_{10}n\cdot\log_{10}m .
+\end{align}
+The right-hand sides are equal, and $\log_{10}$ is one-to-one, so
+\begin{align}
+\boxed{x=y}.
+\end{align}
+\ans{Option (c)}
+\begin{lstlisting}
+import numpy as np
+m, n = 50.0, 7.0
+print(n**np.log10(m), m**np.log10(n))   # equal
+\end{lstlisting}
+
+% =====================================================
+% Q7
+% =====================================================
+\item[\textbf{Q.7}] Five integers are picked from $0$ to $20$ (repetition allowed)
+with mean $12$, median $18$ and a single mode $20$. Ignoring permutations, the
+number of ways is \underline{\hspace{1.5cm}}.
+\hfill (GATE DA 2026)
+\begin{multicols}{4}
+\begin{enumerate}[label=(\alph*),itemsep=0pt]
+ \item $0$ \item $1$ \item $2$ \item $3$
+\end{enumerate}
+\end{multicols}
+\solution
+Order the numbers $a\le b\le c\le d\le e$.
+\begin{align}
+\text{median: } c=18,\qquad
+\text{mean: } a+b+c+d+e=5\cdot 12=60 \;\Rightarrow\; a+b+d+e=42 .
+\end{align}
+Since $d,e\ge 18$ we get $d+e\ge 36$, hence $a+b\le 6$.
+
+\textbf{Mode condition.} The unique mode is $20$, and $c=18$ already occurs.
+\begin{itemize}
+ \item If $d=18$, then $18$ occurs twice and $20$ can occur at most once
+ ($e$ only): $18$ would be the mode. Rejected.
+ \item If $d=19$ or $e\neq 20$, then $20$ occurs at most once and cannot be
+ the strict single mode. Rejected.
+ \item So $d=e=20$ (the value $20$ occurs twice). Then $a+b=42-40=2$,
+ giving $(a,b)\in\{(0,2),(1,1)\}$.
+ \begin{itemize}
+  \item $(1,1)$: values $1,1,18,20,20$ have two modes ($1$ and $20$). Rejected.
+  \item $(0,2)$: values $0,2,18,20,20$, mean $=60/5=12$, median $18$, unique
+  mode $20$. Valid.
+ \end{itemize}
+\end{itemize}
+Exactly one multiset works.
+\ans{$\boxed{1}$ \quad Option (b)}
+\begin{lstlisting}
+from itertools import combinations_with_replacement as cwr
+from statistics import mean, median, multimode
+cnt=0
+for t in cwr(range(21),5):
+    if mean(t)==12 and median(t)==18 and multimode(t)==[20]: cnt+=1
+print(cnt)
+\end{lstlisting}
+
+% =====================================================
+% Q9
+% =====================================================
+\item[\textbf{Q.9}] $P,Q,R,S,X,Y$ are distinct digits. $PQ$ and $RS$ are
+consecutive two-digit numbers and $(PQ)^2+(RS)^2=XYP$ (a three-digit number).
+The value of $Y$ is \underline{\hspace{1.5cm}}.
+\hfill (GATE DA 2026)
+\begin{multicols}{4}
+\begin{enumerate}[label=(\alph*),itemsep=0pt]
+ \item $4$ \item $5$ \item $6$ \item $7$
+\end{enumerate}
+\end{multicols}
+\solution
+Let the two numbers be $k$ and $k+1$ with $10\le k$.
+\begin{align}
+k^2+(k+1)^2 = 2k^2+2k+1 \le 999 \Rightarrow k\le 21 .
+\end{align}
+So $10\le k\le 21$. For $10\le k\le 18$ both $k,k+1$ have tens digit $1$, forcing
+$P=R$, which violates distinctness. Similarly $k=20,21$ give $k$ and $k+1$ with
+the same tens digit $2$. Only $k=19$ remains: the numbers $19$ and $20$ with digits
+$1,9,2,0$ all distinct.
+\begin{align}
+19^2+20^2 = 361+400 = 761 = XYP .
+\end{align}
+Units digit of $761$ is $1$, so $P=1$, which means $PQ=19$, $RS=20$ (consistent).
+Then $X=7$, $Y=6$, and the digits $\{1,9,2,0,7,6\}$ are all distinct.
+\begin{align}
+\boxed{Y=6}
+\end{align}
+\ans{Option (c)}
+\begin{lstlisting}
+for k in range(10,100):
+    for pq,rs in ((k,k+1),(k+1,k)):
+        s=pq*pq+rs*rs
+        if 100<=s<=999 and pq<100 and rs<100:
+            d=[pq//10,pq%10,rs//10,rs%10,s//100,(s//10)%10]
+            if s%10==pq//10 and len(set(d))==6: print(pq,rs,s)
+\end{lstlisting}
+
+% =====================================================
+% Q10
+% =====================================================
+\item[\textbf{Q.10}] \textit{(Figure in the paper: circle of radius 10\,cm, $PQ=RQ$,
+$\angle PQR=45^\circ$, shaded region $PQRO$.)} The area of the shaded region is
+\underline{\hspace{1.5cm}} cm$^2$.
+\hfill (GATE DA 2026)
+\begin{multicols}{4}
+\begin{enumerate}[label=(\alph*),itemsep=0pt]
+ \item $50$ \item $25\sqrt2$ \item $50\sqrt2$ \item $100$
+\end{enumerate}
+\end{multicols}
+\solution
+By the inscribed angle theorem the central angle on arc $PR$ is
+\begin{align}
+\angle POR = 2\angle PQR = 90^\circ .
+\end{align}
+Since $PQ=RQ$, $Q$ is the midpoint of the major arc $PR$, so $Q,O$ and the midpoint
+of $PR$ are collinear and $QO\perp PR$. The shaded quadrilateral $PQRO$ is a kite
+with diagonals
+\begin{align}
+QO = r = 10,\qquad PR = r\sqrt2 = 10\sqrt2 \quad(\text{chord of a }90^\circ\text{ arc}).
+\end{align}
+Here $O$ lies inside triangle $PQR$, so the shaded region is the \emph{arrowhead}
+(concave kite) obtained as triangle $PQR$ minus triangle $POR$:
+\begin{align}
+\text{Area}&=[PQR]-[POR].
+\end{align}
+The distance from $O$ to $PR$ is $\tfrac{r}{\sqrt2}=5\sqrt2$, so
+\begin{align}
+[POR]&=\tfrac12 r^2=50,\\
+[PQR]&=\tfrac12\cdot PR\cdot\big(r+\tfrac{r}{\sqrt2}\big)
+=\tfrac12\cdot 10\sqrt2\,(10+5\sqrt2)=50\sqrt2+50 .
+\end{align}
+\begin{align}
+\text{Area}=50\sqrt2+50-50=\boxed{50\sqrt2\ \text{cm}^2}.
+\end{align}
+\ans{Option (c)}
+\textit{Remark.} Equivalent shortcut: area $=\tfrac12\,QO\cdot PR=\tfrac12\cdot10\cdot10\sqrt2=50\sqrt2$
+(half the product of diagonals of the arrowhead, valid because $QO\perp PR$).
+
+% =====================================================
+% Q16
+% =====================================================
+\item[\textbf{Q.16}] Output of the Python program
+\begin{lstlisting}
+def append_to_lst(val, lst=[]):
+    lst.append(val)
+    return lst
+print(append_to_lst(1))
+print(append_to_lst(2))
+print(append_to_lst(3, []))
+\end{lstlisting}
+\hfill (GATE DA 2026)
+\begin{multicols}{2}
+\begin{enumerate}[label=(\alph*),itemsep=0pt]
+ \item \texttt{[1]}, \texttt{[2]}, \texttt{[3]}
+ \item \texttt{[1]}, \texttt{[1, 2]}, \texttt{[3]}
+ \item \texttt{[1]}, \texttt{[2]}, \texttt{[1, 2, 3]}
+ \item \texttt{[1]}, \texttt{[1, 2]}, \texttt{[1, 3]}
+\end{enumerate}
+\end{multicols}
+\solution
+Default arguments are evaluated \emph{once}, when the function is defined. The default
+\texttt{lst=[]} is therefore a single list object shared by all calls that do not pass
+\texttt{lst}.
+\begin{itemize}
+ \item Call 1: shared list becomes \texttt{[1]}, printed.
+ \item Call 2: same shared list becomes \texttt{[1, 2]}, printed.
+ \item Call 3: a fresh list \texttt{[]} is passed, so the result is \texttt{[3]}; the shared list is untouched.
+\end{itemize}
+\ans{Option (b)}
+
+% =====================================================
+% Q19
+% =====================================================
+\item[\textbf{Q.19}] $M$ is a randomly chosen non-empty subset of
+$S=\{1,2,\dots,2026\}$. The probability that the product of the elements of $M$
+is even is \underline{\hspace{1.5cm}}.
+\hfill (GATE DA 2026)
+\begin{multicols}{2}
+\begin{enumerate}[label=(\alph*),itemsep=0pt]
+ \item $2^{1013}(2^{1013}-1)/2^{2026}$
+ \item $2^{1013}/2^{2026}$
+ \item $2^{1013}(2^{1013}-1)/(2^{2026}-1)$
+ \item $1/(2^{2026}-1)$
+\end{enumerate}
+\end{multicols}
+\solution
+By the binomial theorem (generating function $(1+x)^N$ at $x=1$) a set with $N$
+elements has $\sum_k\binom Nk=2^N$ subsets, so the number of non-empty subsets of $S$ is
+\begin{align}
+2^{2026}-1 .
+\end{align}
+The product is \emph{odd} iff every chosen element is odd. $S$ contains $1013$ odd numbers,
+so the number of non-empty all-odd subsets is $2^{1013}-1$. Hence the number of
+subsets with even product is
+\begin{align}
+(2^{2026}-1)-(2^{1013}-1)=2^{2026}-2^{1013}=2^{1013}\left(2^{1013}-1\right).
+\end{align}
+\begin{align}
+P=\boxed{\frac{2^{1013}\left(2^{1013}-1\right)}{2^{2026}-1}}
+\end{align}
+\ans{Option (c)}
+
+% =====================================================
+% Q20
+% =====================================================
+\item[\textbf{Q.20}] A program returns a random non-negative integer solution of
+$n_1+n_2+n_3+n_4=20$. The probability that all $n_i$ are positive is
+\underline{\hspace{1.5cm}}.
+\hfill (GATE DA 2026)
+\begin{multicols}{4}
+\begin{enumerate}[label=(\alph*),itemsep=0pt]
+ \item $\binom{19}{3}/\binom{23}{3}$
+ \item $\binom{20}{4}/\binom{24}{4}$
+ \item $\binom{20}{3}/\binom{23}{3}$
+ \item $\binom{19}{4}/\binom{24}{4}$
+\end{enumerate}
+\end{multicols}
+\solution
+Use generating functions. Each non-negative $n_i$ contributes
+$\sum_{n\ge0}x^n=\dfrac1{1-x}$, so
+\begin{align}
+\#\{\text{non-negative solutions}\}=[x^{20}]\,(1-x)^{-4}=\binom{20+3}{3}=\binom{23}{3}.
+\end{align}
+For positive $n_i$ each factor is $\dfrac{x}{1-x}$, so
+\begin{align}
+\#\{\text{positive solutions}\}=[x^{20}]\,x^4(1-x)^{-4}=[x^{16}](1-x)^{-4}=\binom{19}{3}.
+\end{align}
+All solutions are equally likely, therefore
+\begin{align}
+P=\boxed{\binom{19}{3}\Big/\binom{23}{3}}
+\end{align}
+\ans{Option (a)}
+
+% =====================================================
+% Q21
+% =====================================================
+\item[\textbf{Q.21}] $M=\begin{pmatrix}\cos\theta&-\sin\theta\\ \sin\theta&\cos\theta\end{pmatrix}$,
+$\theta=\dfrac{2\pi}{5}$. Which option equals $M^{2026}$?
+\hfill (GATE DA 2026)
+\begin{multicols}{4}
+\begin{enumerate}[label=(\alph*),itemsep=0pt]
+ \item $M^2$ \item $M$ \item $M^{-1}$ \item $I_2$
+\end{enumerate}
+\end{multicols}
+\solution
+$M$ is the rotation by $\theta$. Its characteristic equation is
+$\lambda^2-2\cos\theta\,\lambda+1=0$, so the eigenvalues are $e^{\pm i\theta}$
+(distinct), and $M$ is diagonalisable: $M=P\,\mathrm{diag}(e^{i\theta},e^{-i\theta})P^{-1}$.
+Hence
+\begin{align}
+M^{n}=P\,\mathrm{diag}\!\left(e^{in\theta},e^{-in\theta}\right)P^{-1}
+=\begin{pmatrix}\cos n\theta&-\sin n\theta\\ \sin n\theta&\cos n\theta\end{pmatrix}.
+\end{align}
+(The same follows from the $z$-transform $\Z\{M^k\}=z(zI-M)^{-1}$, whose poles are $e^{\pm i\theta}$.)
+Now $2026=5\cdot405+1$, so
+\begin{align}
+2026\,\theta = 405\cdot 2\pi+\frac{2\pi}{5}\ \Rightarrow\ M^{2026}=M(\theta)=M .
+\end{align}
+\ans{Option (b)}
+
+% =====================================================
+% Q22
+% =====================================================
+\item[\textbf{Q.22}] $S_1=\{x\in\mathbb R^3: x^Tx\le16\}$ and $S_2$ is a
+two-dimensional subspace of $\mathbb R^3$. The area of $S_1\cap S_2$ is
+\underline{\hspace{1.5cm}}.
+\hfill (GATE DA 2026)
+\begin{multicols}{4}
+\begin{enumerate}[label=(\alph*),itemsep=0pt]
+ \item $16\pi$ \item $4\pi$ \item $4\pi^2$ \item $16\pi^2$
+\end{enumerate}
+\end{multicols}
+\solution
+A two-dimensional subspace of $\mathbb R^3$ is a plane \emph{through the origin}.
+$S_1$ is the closed ball of radius $4$ centred at the origin, so the intersection is the
+full disc of radius $4$ in that plane (the plane passes through the centre):
+\begin{align}
+\text{Area}=\pi r^2=\pi\cdot4^2=\boxed{16\pi}.
+\end{align}
+\ans{Option (a)}
+
+% =====================================================
+% Q27
+% =====================================================
+\item[\textbf{Q.27}] $f(x)=x^3-3x^2+2$ on $(-1,3]$. Which statement(s) is/are
+correct?
+\hfill (GATE DA 2026)
+\begin{enumerate}[label=(\alph*),itemsep=0pt]
+ \item $f(x)$ has exactly two roots in $[-0.9,0]$.
+ \item $f(x)$ has a minimum at $2$ only.
+ \item $f(x)$ has maximum at $0$ only.
+ \item $f(x)$ has a root at $1$.
+\end{enumerate}
+\solution
+\textbf{Roots.} $f(1)=1-3+2=0$, so $(x-1)$ is a factor:
+\begin{align}
+f(x)=(x-1)(x^2-2x-2),\qquad x^2-2x-2=0\Rightarrow x=1\pm\sqrt3 .
+\end{align}
+Roots: $1-\sqrt3\approx-0.732$, $1$, $1+\sqrt3\approx2.732$. In $[-0.9,0]$ only
+$-0.732$ lies, so (a) is false and (d) is true.
+
+\textbf{Extrema.} $f'(x)=3x^2-6x=3x(x-2)$, critical points $x=0,2$.
+\begin{align}
+f(0)=2,\quad f(2)=-2,\quad f(3)=2,\quad \lim_{x\to-1^+}f(x)=-2\ \text{(not attained, $-1\notin$ domain)}.
+\end{align}
+The global minimum value $-2$ is attained only at $x=2$ (the point $x=-1$ is excluded),
+so (b) is true. The maximum value $2$ is attained at both $x=0$ and $x=3$, so (c) is false.
+\ans{$\boxed{\text{(b) and (d)}}$}
+
+% =====================================================
+% Q28
+% =====================================================
+\item[\textbf{Q.28}] $Z\sim N(0,1)$ has pdf $g$ and cdf $G$; $Y\sim t_1$ has pdf
+$h$ and cdf $H$. Let $c>0$ satisfy $g(c)=h(c)$. Which statement(s) is/are correct?
+\hfill (GATE DA 2026)
+\begin{multicols}{2}
+\begin{enumerate}[label=(\alph*),itemsep=0pt]
+ \item $G(0)=H(0)$ \item $G(c)<H(c)$ \item $G(-c)<H(-c)$ \item $g(0)=h(0)$
+\end{enumerate}
+\end{multicols}
+\solution
+The $t_1$ law is the standard Cauchy law. Fourier transforms of the pdfs
+(characteristic functions) are
+\begin{align}
+\varphi_Z(\omega)=e^{-\omega^2/2},\qquad \varphi_Y(\omega)=e^{-|\omega|},
+\end{align}
+so $Y$ decays polynomially in the tails ($h(y)=\frac1{\pi(1+y^2)}$), whereas $Z$ decays
+like $e^{-z^2/2}$ (heavier tails for $Y$).
+
+\textbf{(a)} Both pdfs are even, so each cdf equals $\tfrac12$ at $0$: $G(0)=H(0)=\tfrac12$. True.
+
+\textbf{(d)} $g(0)=\dfrac1{\sqrt{2\pi}}\approx0.399\neq h(0)=\dfrac1\pi\approx0.318$. False.
+
+\textbf{Crossing point.} $g(c)=h(c)\iff\sqrt{\pi/2}\,(1+c^2)e^{-c^2/2}=1$, which gives
+$c\approx1.85$.
+
+\textbf{(b), (c).} Using $c\approx1.85$:
+\begin{align}
+G(c)&\approx0.968,& H(c)&=\tfrac12+\tfrac{\arctan c}{\pi}\approx0.842\ \Rightarrow\ G(c)>H(c)\ \text{(b false)},\\
+G(-c)&\approx0.032,& H(-c)&\approx0.158\ \Rightarrow\ G(-c)<H(-c)\ \text{(c true)}.
+\end{align}
+\ans{$\boxed{\text{(a) and (c)}}$}
+\begin{lstlisting}
+from scipy.stats import norm, t
+from scipy.optimize import brentq
+c=brentq(lambda x: norm.pdf(x)-t.pdf(x,1),1,3)
+print(c, norm.cdf(c), t.cdf(c,1), norm.cdf(-c), t.cdf(-c,1))
+\end{lstlisting}
+
+% =====================================================
+% Q29
+% =====================================================
+\item[\textbf{Q.29}] The objective is $f_w(x)=wx$, minimised by SGD with learning
+rate $0.10$. At the end of iteration $i$, $w=10.00$; the input for iteration $i+1$ is
+$x=10.00$. The value of $w$ after iteration $i+1$ is \underline{\hspace{1.5cm}}.
+\hfill (GATE DA 2026)
+\solution
+Gradient with respect to the parameter:
+\begin{align}
+\frac{\partial f_w(x)}{\partial w}=x=10 .
+\end{align}
+SGD update:
+\begin{align}
+w_{i+1}=w_i-\eta\,\frac{\partial f}{\partial w}=10-0.10(10)=\boxed{9.00}.
+\end{align}
+\ans{$9.00$}
+
+% =====================================================
+% Q34
+% =====================================================
+\item[\textbf{Q.34}] $X$ is exponentially distributed with mean $\lambda>0$ and
+$P(X>5)=0.35$. Then $P(X>10\mid X>5)=$ \underline{\hspace{1.5cm}} (two decimals).
+\hfill (GATE DA 2026)
+\solution
+The survival function is $S(t)=P(X>t)=e^{-t/\lambda}$. Then
+\begin{align}
+P(X>10\mid X>5)=\frac{S(10)}{S(5)}=\frac{e^{-10/\lambda}}{e^{-5/\lambda}}=e^{-5/\lambda}=S(5).
+\end{align}
+This is the memoryless property. Hence
+\begin{align}
+P(X>10\mid X>5)=P(X>5)=\boxed{0.35}.
+\end{align}
+(Check: $S(5)=0.35\Rightarrow e^{-5/\lambda}=0.35$, so $S(10)=0.35^2=0.1225$ and $0.1225/0.35=0.35$.)
+\ans{$0.35$}
+
+% =====================================================
+% Q35
+% =====================================================
+\item[\textbf{Q.35}] The value of $\displaystyle\sum_{i=0}^{\infty}\sum_{j=1}^{\infty}2^{-i}3^{-j}$
+is \underline{\hspace{1.5cm}} (integer).
+\hfill (GATE DA 2026)
+\solution
+All terms are positive, so the double sum factorises into two geometric series. In
+$z$-transform language, $\Z\{a^n u[n]\}(z)=\dfrac{1}{1-az^{-1}}$ for $|z|>|a|$, and
+evaluating at $z=1$ gives the series sum.
+\begin{align}
+\sum_{i=0}^\infty 2^{-i}&=\frac{1}{1-\tfrac12}=2,\\
+\sum_{j=1}^\infty 3^{-j}&=\frac{\tfrac13}{1-\tfrac13}=\frac12 .
+\end{align}
+\begin{align}
+\sum_{i=0}^{\infty}\sum_{j=1}^{\infty}2^{-i}3^{-j}=2\cdot\frac12=\boxed{1}.
+\end{align}
+\ans{$1$}
+
+% =====================================================
+% Q44
+% =====================================================
+\item[\textbf{Q.44}] $X\sim\text{Bernoulli}(0.3)$ and $Y\sim N(0,100)$ are
+independent. The variance of $(2X-1)Y$ is \underline{\hspace{1.5cm}}.
+\hfill (GATE DA 2026)
+\begin{multicols}{4}
+\begin{enumerate}[label=(\alph*),itemsep=0pt]
+ \item $100$ \item $90$ \item $49$ \item $21$
+\end{enumerate}
+\end{multicols}
+\solution
+Let $W=(2X-1)Y$. By independence and $E[Y]=0$,
+\begin{align}
+E[W]=E[2X-1]\,E[Y]=0,\qquad
+\mathrm{Var}(W)=E[W^2]=E\!\left[(2X-1)^2\right]E[Y^2].
+\end{align}
+Since $X\in\{0,1\}$, $2X-1\in\{-1,+1\}$, so $(2X-1)^2=1$ with probability $1$.
+Also $E[Y^2]=\mathrm{Var}(Y)+E[Y]^2=100$. Hence
+\begin{align}
+\mathrm{Var}(W)=1\cdot100=\boxed{100}.
+\end{align}
+(Equivalently, $W\mid X\sim N(0,100)$ for both values of $X$, so $W\sim N(0,100)$.)
+\ans{Option (a)}
+
+% =====================================================
+% Q45
+% =====================================================
+\item[\textbf{Q.45}] $\displaystyle L=\lim_{n\to\infty}\sum_{k=0}^{n}\frac{e^{-n}n^k}{k!}$.
+The value of $L$ is \underline{\hspace{1.5cm}}.
+\hfill (GATE DA 2026)
+\begin{multicols}{4}
+\begin{enumerate}[label=(\alph*),itemsep=0pt]
+ \item $0.5$ \item $1.0$ \item $0$ \item $e^{-1}$
+\end{enumerate}
+\end{multicols}
+\solution
+The sum is $P(N_n\le n)$ where $N_n\sim\text{Poisson}(n)$. The characteristic function of
+a Poisson$(n)$ variable is $\exp\!\big(n(e^{i\omega}-1)\big)$, and $N_n$ has the same law as
+a sum of $n$ i.i.d. Poisson$(1)$ variables, each with mean $1$ and variance $1$.
+By the Central Limit Theorem,
+\begin{align}
+\frac{N_n-n}{\sqrt n}\ \xrightarrow{d}\ N(0,1).
+\end{align}
+Therefore
+\begin{align}
+L=\lim_{n\to\infty}P\!\left(\frac{N_n-n}{\sqrt n}\le0\right)=\Phi(0)=\boxed{0.5}.
+\end{align}
+\ans{Option (a)}
+\begin{lstlisting}
+from scipy.stats import poisson
+for n in (10,100,1000,10000): print(n, poisson.cdf(n,n))
+\end{lstlisting}
+
+% =====================================================
+% Q46
+% =====================================================
+\item[\textbf{Q.46}] $\gamma_1,\gamma_2,\gamma_3$ are the eigenvalues of
+$\begin{pmatrix}1&0&0\\0&\cos t&\sin t\\0&-\sin t&\cos t\end{pmatrix}$, $t\in[-\pi,\pi]$.
+All values of $t$ with $\gamma_1+\gamma_2+\gamma_3=1+\sqrt2$ are
+\underline{\hspace{1.5cm}}.
+\hfill (GATE DA 2026)
+\begin{multicols}{4}
+\begin{enumerate}[label=(\alph*),itemsep=0pt]
+ \item $\{\tfrac\pi3,-\tfrac\pi4\}$ \item $\{\tfrac\pi4,-\tfrac\pi3\}$
+ \item $\{\tfrac\pi4,-\tfrac\pi4\}$ \item $\{\tfrac\pi3,-\tfrac\pi3\}$
+\end{enumerate}
+\end{multicols}
+\solution
+The matrix is block diagonal, so its characteristic polynomial is
+\begin{align}
+(1-\gamma)\left(\gamma^2-2\gamma\cos t+1\right)=0
+\ \Rightarrow\ \gamma\in\{1,\ e^{it},\ e^{-it}\}.
+\end{align}
+Sum of eigenvalues $=$ trace:
+\begin{align}
+\gamma_1+\gamma_2+\gamma_3=1+e^{it}+e^{-it}=1+2\cos t .
+\end{align}
+Setting $1+2\cos t=1+\sqrt2$ gives $\cos t=\dfrac{\sqrt2}{2}$. In $[-\pi,\pi]$,
+\begin{align}
+\boxed{t=\pm\frac{\pi}{4}}.
+\end{align}
+\ans{Option (c)}
+
+% =====================================================
+% Q50
+% =====================================================
+\item[\textbf{Q.50}] Consider the Python program
+\begin{lstlisting}
+def outer():
+    x = []
+    def inner(val):
+        x.append(val)
+        return x
+    return inner
+f1 = outer()
+f2 = outer()
+print(f1(10))   # Line P
+print(f1(20))   # Line Q
+print(f2(30))   # Line R
+print(f1(40))   # Line S
+\end{lstlisting}
+Which option(s) is/are correct?
+\hfill (GATE DA 2026)
+\begin{enumerate}[label=(\alph*),itemsep=0pt]
+ \item \texttt{f1} and \texttt{f2} share the same list \texttt{x}
+ \item Output of Line Q is \texttt{[10, 20]}
+ \item Output of Line R is \texttt{[10, 20, 30]}
+ \item Output of Line S is \texttt{[10, 20, 40]}
+\end{enumerate}
+\solution
+Every call to \texttt{outer()} creates a \emph{new} local list \texttt{x} and a new closure
+\texttt{inner} bound to that list. Hence \texttt{f1} and \texttt{f2} have separate lists: (a) is false.
+\begin{itemize}
+ \item Line P: \texttt{f1}'s list $\to$ \texttt{[10]}.
+ \item Line Q: \texttt{f1}'s list $\to$ \texttt{[10, 20]}.
+ \item Line R: \texttt{f2}'s own list $\to$ \texttt{[30]} (so (c) is false).
+ \item Line S: \texttt{f1}'s list $\to$ \texttt{[10, 20, 40]}.
+\end{itemize}
+\ans{$\boxed{\text{(b) and (d)}}$}
+
+% =====================================================
+% Q52
+% =====================================================
+\item[\textbf{Q.52}] $M=I_n-\frac1n\mathbf{1}\mathbf{1}^T$, where
+$\mathbf 1=(1,\dots,1)^T\in\mathbb R^n$. Which option(s) is/are correct?
+\hfill (GATE DA 2026)
+\begin{multicols}{2}
+\begin{enumerate}[label=(\alph*),itemsep=0pt]
+ \item $M^T=M$ \item $M^2=I_n$ \item $\mathrm{Trace}(M)=n$ \item $M$ is a projection matrix
+\end{enumerate}
+\end{multicols}
+\solution
+\textbf{Symmetry:} $(\mathbf{1}\mathbf{1}^T)^T=\mathbf{1}\mathbf{1}^T$, so $M^T=M$ (a true).
+
+\textbf{Idempotence:} using $\mathbf 1^T\mathbf 1=n$,
+\begin{align}
+M^2&=I-\frac2n\mathbf{1}\mathbf{1}^T+\frac1{n^2}\mathbf{1}(\mathbf 1^T\mathbf 1)\mathbf{1}^T
+=I-\frac2n\mathbf{1}\mathbf{1}^T+\frac1n\mathbf{1}\mathbf{1}^T=M\neq I_n .
+\end{align}
+So (b) is false, and since $M$ is symmetric and idempotent it is an orthogonal projection
+matrix (d true), onto the subspace orthogonal to $\mathbf 1$.
+
+\textbf{Trace:} $\mathrm{tr}(M)=n-\frac1n\mathbf 1^T\mathbf 1=n-1\neq n$ (c false). By the spectral theorem the
+eigenvalues are $0$ (once, eigenvector $\mathbf 1$) and $1$ ($n-1$ times).
+\ans{$\boxed{\text{(a) and (d)}}$}
+
+% =====================================================
+% Q53
+% =====================================================
+\item[\textbf{Q.53}] $X_1,\dots,X_n$ ($n\ge2$) are i.i.d. $N(0,1)$ and
+$\bar X=\frac1n\sum X_i$. Which statement(s) is/are correct?
+\hfill (GATE DA 2026)
+\begin{enumerate}[label=(\alph*),itemsep=0pt]
+ \item $\sum_{i=1}^nX_i^2$ follows $\chi^2$ with $n$ degrees of freedom.
+ \item $\sum_{i=1}^n(X_i-\bar X)^2$ follows $\chi^2$ with $(n-1)$ degrees of freedom.
+ \item $X_1^2+X_n^2$ follows exponential distribution with mean $2$.
+ \item $(\sqrt n\,\bar X)^2$ follows $\chi^2$ with $2$ degrees of freedom.
+\end{enumerate}
+\solution
+The moment generating function (a two-sided Laplace transform of the pdf) of $X^2$ for
+$X\sim N(0,1)$ is
+\begin{align}
+M_{X^2}(s)=E\!\left[e^{sX^2}\right]=(1-2s)^{-1/2},\qquad s<\tfrac12 .
+\end{align}
+\textbf{(a)} By independence the MGF of $\sum X_i^2$ is $(1-2s)^{-n/2}$, the MGF of $\chi^2_n$. True.
+
+\textbf{(b)} By Cochran's theorem, $\sum(X_i-\bar X)^2=X^T M X$ with $M$ the centring projection of rank
+$n-1$ (see Q.52), hence $\chi^2_{n-1}$. True.
+
+\textbf{(c)} For $n\ge 2$, $X_1$ and $X_n$ are independent, so the MGF is $(1-2s)^{-1}$. The exponential law
+with mean $2$ has MGF $\dfrac{1}{1-2s}$, hence $X_1^2+X_n^2\sim\text{Exp}(\text{mean }2)=\chi^2_2$. True.
+
+\textbf{(d)} $\sqrt n\,\bar X\sim N(0,1)$, so $(\sqrt n\bar X)^2\sim\chi^2_1$, not $\chi^2_2$. False.
+\ans{$\boxed{\text{(a), (b) and (c)}}$}
+
+% =====================================================
+% Q54
+% =====================================================
+\item[\textbf{Q.54}] $X$ is a discrete random variable with cdf $F(x)$. Which
+statement(s) is/are correct?
+\hfill (GATE DA 2026)
+\begin{enumerate}[label=(\alph*),itemsep=0pt]
+ \item $F(x)$ is always a positive function.
+ \item $F(x)$ is a non-decreasing function.
+ \item $F(x)$ has jump discontinuity.
+ \item $F(x)$ is a left continuous function.
+\end{enumerate}
+\solution
+For a discrete $X$ with pmf $p(x_k)$,
+\begin{align}
+F(x)=\sum_{x_k\le x}p(x_k).
+\end{align}
+\begin{itemize}
+ \item (a) $F(x)\ge0$ but $F(x)=0$ for $x<\min x_k$, so it is not \emph{always positive}. False.
+ \item (b) Adding non-negative masses can only increase $F$: non-decreasing. True.
+ \item (c) At each support point $x_k$ with $p(x_k)>0$, $F$ jumps by $p(x_k)$. True.
+ \item (d) The inequality $x_k\le x$ is non-strict, so $F(x_k)=F(x_k^+)\neq F(x_k^-)$: $F$ is
+ \emph{right}-continuous, not left-continuous. False.
+\end{itemize}
+\ans{$\boxed{\text{(b) and (c)}}$}
+
+% =====================================================
+% Q57
+% =====================================================
+\item[\textbf{Q.57}] $P(+\mid D)=0.8$, $P(+\mid \bar D)=0.1$, $P(D)=0.3$. If a
+person tests positive, the probability of actually having $D$ is
+\underline{\hspace{1.5cm}} (two decimals).
+\hfill (GATE DA 2026)
+\solution
+By the theorem of total probability and Bayes' theorem,
+\begin{align}
+P(+)&=P(+\mid D)P(D)+P(+\mid\bar D)P(\bar D)=0.8(0.3)+0.1(0.7)=0.31,\\
+P(D\mid +)&=\frac{P(+\mid D)P(D)}{P(+)}=\frac{0.24}{0.31}\approx0.7742 .
+\end{align}
+\ans{$\boxed{0.77}$}
+\begin{lstlisting}
+print(0.8*0.3/(0.8*0.3+0.1*0.7))
+\end{lstlisting}
+
+% =====================================================
+% Q58
+% =====================================================
+\item[\textbf{Q.58}] Output of the program
+\begin{lstlisting}
+def fun(L, i=0):
+    if i >= len(L)-1:
+        return 0
+    if L[i] > L[i+1]:
+        L[i+1], L[i] = L[i], L[i+1]
+        return 1+fun(L, i+1)
+    else:
+        return fun(L, i+1)
+data = [5, 3, 4, 1, 2]
+count = 0
+for _ in range(len(data)):
+    count += fun(data)
+print(count)
+\end{lstlisting}
+is \underline{\hspace{1.5cm}} (integer).
+\hfill (GATE DA 2026)
+\solution
+\texttt{fun} performs one pass of bubble sort and returns the number of swaps made. The loop runs it
+$5$ times on the same (mutated) list.
+\begin{align*}
+\text{Pass 1: }&[5,3,4,1,2]\to[3,4,1,2,5]&&\text{4 swaps}\\
+\text{Pass 2: }&[3,4,1,2,5]\to[3,1,2,4,5]&&\text{2 swaps}\\
+\text{Pass 3: }&[3,1,2,4,5]\to[1,2,3,4,5]&&\text{2 swaps}\\
+\text{Pass 4: }&\text{sorted}&&\text{0 swaps}\\
+\text{Pass 5: }&\text{sorted}&&\text{0 swaps}
+\end{align*}
+Total $=4+2+2=8$. \textbf{Check:} each adjacent swap removes exactly one inversion, and the original
+array has $8$ inversions: $(5,3),(5,4),(5,1),(5,2),(3,1),(3,2),(4,1),(4,2)$.
+\ans{$\boxed{8}$}
+
+% =====================================================
+% Q62
+% =====================================================
+\item[\textbf{Q.62}] For a data set $\{x_1,\dots,x_n\}$ with $n=100$,
+$\dfrac1{2000}\displaystyle\sum_{i=1}^n\sum_{j=1}^n(x_i-x_j)^2=99$. The value of
+$\dfrac1{99}\displaystyle\sum_{i=1}^n(x_i-\bar x)^2$ is \underline{\hspace{1.5cm}} (integer).
+\hfill (GATE DA 2026)
+\solution
+Write $x_i-x_j=(x_i-\bar x)-(x_j-\bar x)$ and expand:
+\begin{align}
+\sum_{i,j}(x_i-x_j)^2&=\sum_{i,j}\big[(x_i-\bar x)^2+(x_j-\bar x)^2-2(x_i-\bar x)(x_j-\bar x)\big]\\
+&=2n\sum_i(x_i-\bar x)^2-2\Big(\sum_i(x_i-\bar x)\Big)^2
+=2n\,S,
+\end{align}
+where $S=\sum_i(x_i-\bar x)^2$ and $\sum_i(x_i-\bar x)=0$. With $n=100$,
+\begin{align}
+\frac{2\cdot100\,S}{2000}=\frac{S}{10}=99\ \Rightarrow\ S=990 .
+\end{align}
+\begin{align}
+\frac1{99}S=\frac{990}{99}=\boxed{10}.
+\end{align}
+\ans{$10$}
+
+% =====================================================
+% Q63
+% =====================================================
+\item[\textbf{Q.63}] $X\sim\text{Uniform}(-1,1)$ and
+$Y\mid X=x\sim\text{Uniform}(x^2-0.1,\,x^2+0.1)$. The value of
+$\text{correlation}(X,Y)$ is \underline{\hspace{1.5cm}} (integer).
+\hfill (GATE DA 2026)
+\solution
+The conditional mean is the midpoint of the interval: $E[Y\mid X]=X^2$. By the law of total
+expectation,
+\begin{align}
+E[XY]=E\big[X\,E[Y\mid X]\big]=E[X^3]=\int_{-1}^{1}x^3\cdot\frac12\,dx=0,
+\end{align}
+since $x^3$ is an odd function integrated over a symmetric interval. Also $E[X]=0$, so
+\begin{align}
+\mathrm{Cov}(X,Y)=E[XY]-E[X]E[Y]=0 .
+\end{align}
+Both variances are positive, so
+\begin{align}
+\rho(X,Y)=\frac{\mathrm{Cov}(X,Y)}{\sigma_X\sigma_Y}=\boxed{0}.
+\end{align}
+(They are uncorrelated yet strongly dependent.)
+\ans{$0$}
+
+% =====================================================
+% Q64
+% =====================================================
+\item[\textbf{Q.64}] $A_{5\times5}$ has i.i.d. Bernoulli$(0.5)$ entries. The
+probability that the second row sum and the third column sum are both $3$ is
+\underline{\hspace{1.5cm}} (two decimals).
+\hfill (GATE DA 2026)
+\solution
+Row $2$ and column $3$ share the single entry $a_{23}$; the remaining $4$ entries of the row
+and $4$ entries of the column are disjoint and independent. Condition on $a_{23}$.
+
+\textbf{Case $a_{23}=1$} (prob.\ $\tfrac12$): the other $4$ row entries must sum to $2$ and likewise
+the other $4$ column entries:
+\begin{align}
+\left[\binom42\frac1{2^4}\right]^2=\left(\frac{6}{16}\right)^2=\frac{36}{256}.
+\end{align}
+\textbf{Case $a_{23}=0$} (prob.\ $\tfrac12$): the other entries must sum to $3$:
+\begin{align}
+\left[\binom43\frac1{2^4}\right]^2=\left(\frac{4}{16}\right)^2=\frac{16}{256}.
+\end{align}
+\begin{align}
+P=\frac12\cdot\frac{36}{256}+\frac12\cdot\frac{16}{256}=\frac{26}{256}=0.1015625\approx\boxed{0.10}.
+\end{align}
+\ans{$0.10$}
+\begin{lstlisting}
+from math import comb
+print(0.5*(comb(4,2)/16)**2 + 0.5*(comb(4,3)/16)**2)
+\end{lstlisting}
+
+% =====================================================
+% Q65
+% =====================================================
+\item[\textbf{Q.65}] $A=I_n-\frac1n\mathbf{1}\mathbf{1}^T$ and
+$S=\{x\in\mathbb R^n: x^Tx=1\}$. The value of $\max_{x\in S}x^TAx$ is
+\underline{\hspace{1.5cm}} (integer).
+\hfill (GATE DA 2026)
+\solution
+$A$ is symmetric and idempotent (Q.52), so its eigenvalues are $0$ and $1$. By the spectral
+theorem and the Rayleigh quotient,
+\begin{align}
+\max_{\|x\|=1}x^TAx=\lambda_{\max}(A)=1 ,
+\end{align}
+attained by any unit vector orthogonal to $\mathbf 1$ (e.g.\ $x=\tfrac1{\sqrt2}(1,-1,0,\dots,0)^T$, for which
+$x^TAx=x^Tx-\tfrac1n(\mathbf 1^Tx)^2=1$).
+\ans{$\boxed{1}$}
+
+\end{enumerate}
+
+\end{document}
